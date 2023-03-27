@@ -9,6 +9,7 @@ You just need to simply run it through a .bat file.
 java -jar YanaCommunityBot.jar
 pause
 ```
+But you probably won't be able to use this bot with a simple edit of config.yml, as there is currently some hard coding in the code that needs to be improved for testing purposes or if you don't know how to implement it. So the best way is to modify the code and compile it yourself.
 
 ## Current Features
 - Dynamic Voice Channel

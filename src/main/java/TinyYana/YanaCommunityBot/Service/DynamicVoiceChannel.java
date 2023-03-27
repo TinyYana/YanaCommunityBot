@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.Category;
 import net.dv8tion.jda.api.entities.channel.concrete.VoiceChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +23,12 @@ public class DynamicVoiceChannel extends ListenerAdapter {
         Member member = event.getMember();
         VoiceChannel triggerChannel = event.getJDA().getVoiceChannelById(Long.parseLong(BotCore.getConfig().get("Dynamic_Voice_Channel_ID").toString()));
 
-        if (event.getChannelJoined() == triggerChannel) {
+        //獲得更新前後的語音頻道
+        AudioChannel oldChannel = event.getOldValue();
+        AudioChannel newChannel = event.getNewValue();
+
+        //判斷用戶是否加入了觸發頻道
+        if (oldChannel == null && newChannel == triggerChannel) {
             System.out.println("true");
             try {
                 createChannelAndMoveMember(
@@ -36,14 +42,17 @@ public class DynamicVoiceChannel extends ListenerAdapter {
             }
         }
 
-        if (event.getChannelLeft() == triggerChannel) return;
-        if (!event.getChannelLeft().getParentCategory().getChannels().contains(triggerChannel)) return;
-        if (!event.getGuild().equals(BotCore.getJDA().getGuildById(BotUtil.getStringFromConfig("Guild_ID")))) return;
-        if (event.getChannelLeft().getMembers().isEmpty()) {
-            try {
-                event.getChannelLeft().delete().queue();
-            } catch (Exception e) {
-                Listener.logger.info("delete語音被觸發");
+        //判斷用戶是否離開了觸發頻道
+        if (oldChannel == triggerChannel && newChannel == null) return;
+        //判斷用戶是否離開了動態語音頻道
+        if (oldChannel != null && newChannel == null && oldChannel.getParentCategory().getChannels().contains(triggerChannel)) {
+            if (!event.getGuild().equals(BotCore.getJDA().getGuildById(BotUtil.getStringFromConfig("Guild_ID")))) return;
+            if (oldChannel.getMembers().isEmpty()) {
+                try {
+                    oldChannel.delete().queue();
+                } catch (Exception e) {
+                    Listener.logger.info("delete語音被觸發");
+                }
             }
         }
     }

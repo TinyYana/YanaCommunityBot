@@ -17,8 +17,7 @@ But you probably won't be able to use this bot with a simple edit of config.yml,
 - Guild Leave Message
 
 ## The bot is buggy!
-This is normal, because the Bot is under development and there is a lot of content that has not yet been completed.
-If you are interested in developing a Java Discord Bot or have knowledge about it, feel free to contribute to this project or fork it!
+Bugs are common in this project, as the bot is under redevelopment and there is a lot of content that is not yet complete. If you are interested in developing a Java Discord Bot, or have knowledge of it, please feel free to contribute to this project, or fork it!
 
 # License
 You may not use this project for commercial purposes.

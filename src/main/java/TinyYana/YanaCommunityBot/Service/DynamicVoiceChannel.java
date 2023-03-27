@@ -27,7 +27,6 @@ public class DynamicVoiceChannel extends ListenerAdapter {
 
         //判斷用戶是否加入了觸發頻道
         if (oldChannel == null && newChannel == triggerChannel) {
-            System.out.println("true");
             try {
                 createChannelAndMoveMember(
                         triggerChannel.getParentCategory(),

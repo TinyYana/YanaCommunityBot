@@ -10,6 +10,11 @@ java -jar YanaCommunityBot.jar
 pause
 ```
 
+## Current Features
+- Dynamic Voice Channel
+- Guild Join Message
+- Guild Leave Message
+
 ## The bot is buggy!
 This is normal, because the Bot is under development and there is a lot of content that has not yet been completed.
 If you are interested in developing a Java Discord Bot or have knowledge about it, feel free to contribute to this project or fork it!

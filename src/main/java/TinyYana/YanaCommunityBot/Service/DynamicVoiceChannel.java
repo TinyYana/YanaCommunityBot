@@ -14,8 +14,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 public class DynamicVoiceChannel extends ListenerAdapter {
-    //離開語音不會自動刪除頻道
-    //進入頻道不會觸發，移動才會
     @Override
     public void onGuildVoiceUpdate(@NotNull GuildVoiceUpdateEvent event) {
         super.onGuildVoiceUpdate(event);
@@ -46,7 +44,8 @@ public class DynamicVoiceChannel extends ListenerAdapter {
         if (oldChannel == triggerChannel && newChannel == null) return;
         //判斷用戶是否離開了動態語音頻道
         if (oldChannel != null && newChannel == null && oldChannel.getParentCategory().getChannels().contains(triggerChannel)) {
-            if (!event.getGuild().equals(BotCore.getJDA().getGuildById(BotUtil.getStringFromConfig("Guild_ID")))) return;
+            if (!event.getGuild().equals(BotCore.getJDA().getGuildById(BotUtil.getStringFromConfig("Guild_ID"))))
+                return;
             if (oldChannel.getMembers().isEmpty()) {
                 try {
                     oldChannel.delete().queue();

@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 public class EmbedSender extends ListenerAdapter {
-    // [0] 頻道ID
+    // [0] channelID
     // [1] boolean
     // [2] title
     // [3] content
